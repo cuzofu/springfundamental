@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- singleton，表明系统中对于同一个对象，只保留一个实例。 -->
+	<bean id="userDaoImpl" class="sample.spring.ioc.UserDaoImpl"
+		scope="singleton" />
+
+	<!-- prototype，表明系统中每次获取bean时，都新建一个对象。 -->
+	<bean id="userDaoImpl2" class="sample.spring.ioc.UserDaoFactory"
+		factory-method="getUserDao" scope="prototype" />
+
+	<bean id="factory" class="sample.spring.ioc.UserDaoFactory2"></bean>
+	<bean id="userDaoImpl3" factory-bean="factory" factory-method="getUserDao"></bean>
+
+
+	<!--属性赋值 -->
+	<bean id="userService" class="sample.spring.ioc.bean.UserServiceBean">
+		<property name="userId" value="1"></property>
+		<property name="userName" value="ZhangSan"></property>
+		<property name="userDao" ref="userDaoImpl"></property>
+		<property name="hobbies">
+			<list>
+				<value>羽毛球</value>
+				<value>看电影</value>
+				<value>弹吉他</value>
+			</list>
+		</property>
+		<property name="scores">
+			<map>
+				<entry key="数据结构" value="90"></entry>
+				<entry key="编译原理" value="85"></entry>
+				<entry key="离散数学" value="82"></entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- 构造函数 -->
+	<bean id="userService2" class="sample.spring.ioc.bean.UserServiceBean">
+		<constructor-arg index="0" value="1"></constructor-arg>
+		<constructor-arg index="1" value="ZhangSan"></constructor-arg>
+		<constructor-arg index="2" ref="userDaoImpl2"></constructor-arg>
+		<constructor-arg index="3">
+			<list>
+				<value>羽毛球</value>
+				<value>看电影</value>
+				<value>弹吉他</value>
+			</list>
+		</constructor-arg>
+		<constructor-arg index="4">
+			<map>
+				<entry key="数据结构" value="100"></entry>
+				<entry key="编译原理" value="85"></entry>
+				<entry key="离散数学" value="82"></entry>
+			</map>
+		</constructor-arg>
+	</bean>
+	<bean id="userService3" class="sample.spring.ioc.bean.UserServiceBean2"></bean>
+</beans>

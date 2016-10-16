@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- singleton，表明系统中对于同一个对象，只保留一个实例。 -->
+	<bean id="userDaoImpl" class="sample.spring.ioc.UserDaoImpl"
+		scope="singleton" />
+
+	<!-- prototype，表明系统中每次获取bean时，都新建一个对象。 -->
+	<bean id="userDaoImpl2" class="sample.spring.ioc.UserDaoFactory"
+		factory-method="getUserDao" scope="prototype" />
+
+	<bean id="factory" class="sample.spring.ioc.UserDaoFactory2"></bean>
+	<bean id="userDaoImpl3" factory-bean="factory" factory-method="getUserDao"></bean>
+
+	<bean id="userService" class="sample.spring.ioc.bean.UserServiceBean2"></bean>
+
+</beans>
